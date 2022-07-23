@@ -1,0 +1,12 @@
+version: "3.5"
+
+services:
+  app:
+    build: .
+    container_name: layers_solid
+    volumes:
+      - .:/home/node/app
+    ports:
+      - 3001:3000
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
