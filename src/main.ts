@@ -12,7 +12,7 @@ app.post("/transactions", async function (req: Request, res: Response) {
   res.end();
 });
 app.get("/transactions/:code", async function (req: Request, res: Response) {
-  const getTransaction = new GetTransaction();
+  const getTransaction = new GetTransaction(transactionRepository);
   const transaction = getTransaction.execute(req.params.code);
   res.json(transaction);
 })

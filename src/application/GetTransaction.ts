@@ -1,19 +1,10 @@
-import pgp from "pg-promise";
+import TransactionRepository from "../domain/repository/TransactionRepository";
 
 export default class GetTransaction {
-  constructor() {}
+  constructor(readonly transactionRepository: TransactionRepository) {}
 
   async execute(code: string): Promise<Output> {
-    const connection = pgp()("postgres://postgres:123456@db:5432/app");
-    const transaction = await connection.one("select * from app.transaction where code = $1", [code]);
-    transaction.amount = parseFloat(transaction.amount);
-    transaction.paymentMethod = transaction.payment_method;
-    const installments = await connection.query("select * from app.installment where code = $1", [code]);
-    for (const installment of installments) {
-      installment.amount = parseFloat(installment.amount);
-    }
-    transaction.installments = installments;
-    await connection.$pool.end();
+    const transaction = await this.transactionRepository.get(code);
     return transaction;
   }
 }
