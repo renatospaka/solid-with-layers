@@ -1,7 +1,7 @@
 import axios from "axios";
 
 test("deve criar uma transação", async function () {
-  const code = Math.floor(Math.random() * 1000);
+  const code = `${Math.floor(Math.random() * 10000)}`;
   axios({
     url: "http://localhost:3000/transactions",
     method: "post",
