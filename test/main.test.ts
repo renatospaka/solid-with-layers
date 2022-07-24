@@ -23,5 +23,7 @@ test("deve criar uma transação", async function () {
   expect(transaction.amount).toBe(1000);
   expect(transaction.paymentMethod).toBe("credit-card");
   expect(transaction.installments).toHaveLength(12);
+  expect(transaction.installments[0].amount).toBe(83.33);
+  expect(transaction.installments[11].amount).toBe(83.37);
 });
 
