@@ -10,3 +10,19 @@ services:
       - 3001:3000
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
+    depends_on:
+      - db
+
+  db:
+    build: .docker/postgres
+    container_name: postgres_db
+    restart: always
+    tty: true
+    ports:
+      - 5432:5432
+    volumes:
+      - .docker/dbdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=app
+      - POSTGRES_SCHEMA=app

@@ -22,6 +22,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # project
-.docker/
 .vscode/
-
+.docker/dbdata
