@@ -1,18 +1,19 @@
 import express, {Request, Response} from "express";
-import pgp from "pg-promise";
 import CreateTransaction from "./application/CreateTransaction";
 import GetTransaction from "./application/GetTransaction";
+import TransactionDatabaseRepository from "./infra/repository/TransactionDatabaseRepository";
 
 const app = express();
 app.use(express.json());
+const transactionRepository = new TransactionDatabaseRepository()
 app.post("/transactions", async function (req: Request, res: Response) {
-  const createTransaction = new CreateTransaction();
+  const createTransaction = new CreateTransaction(transactionRepository);
   await createTransaction.execute(req.body);
   res.end();
 });
 app.get("/transactions/:code", async function (req: Request, res: Response) {
   const getTransaction = new GetTransaction();
-  const transaction = await getTransaction.execute(req.params.code);
+  const transaction = getTransaction.execute(req.params.code);
   res.json(transaction);
 })
 app.listen(3000);

@@ -1,16 +1,18 @@
 import CreateTransaction from "../src/application/CreateTransaction";
 import GetTransaction from "../src/application/GetTransaction";
+import TransactionDatabaseRepository from "../src/infra/repository/TransactionDatabaseRepository";
 
 // given, when, then -- arrange, act, assert
 test("deve criar uma transação", async function () {
+  const transactionRepository = new TransactionDatabaseRepository();
   const code = `${Math.floor(Math.random() * 10000)}`;
-  const createTransaction = new CreateTransaction()
   const input = {
     code,
     amount: 1000,
     numberInstallments: 12,
     paymentMethod: "credit-card"
   }
+  const createTransaction = new CreateTransaction(transactionRepository);
   await createTransaction.execute(input);
 
   const getTransaction = new GetTransaction();
