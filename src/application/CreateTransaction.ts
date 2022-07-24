@@ -1,9 +1,7 @@
 import pgp from "pg-promise";
 
-export default class  CreateTransaction {
-  constructor() {
-    
-  }
+export default class CreateTransaction {
+  constructor() {}
 
   async execute(input: Input): Promise<void> {
     const connection = pgp()("postgres://postgres:123456@db:5432/app");
