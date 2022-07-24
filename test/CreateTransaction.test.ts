@@ -1,18 +1,17 @@
 import axios from "axios";
+import CreateTransaction from "../src/application/CreateTransaction";
 
 // given, when, then -- arrange, act, assert
 test("deve criar uma transação", async function () {
   const code = `${Math.floor(Math.random() * 10000)}`;
-  await axios({
-    url: "http://localhost:3000/transactions",
-    method: "post",
-    data: {
-      code,
-      amount: 1000,
-      numberInstallments: 12,
-      paymentMethod: "credit-card"
-    }
-  });
+  const createTransaction = new CreateTransaction()
+  const input = {
+    code,
+    amount: 1000,
+    numberInstallments: 12,
+    paymentMethod: "credit-card"
+  }
+  await createTransaction.execute(input);
 
   const response = await axios({
     url: `http://localhost:3000/transactions/${code}`,
