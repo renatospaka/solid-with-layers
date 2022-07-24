@@ -12,6 +12,7 @@ npx jest --init
 # Usage
 ## execution
 npx nodemon src/main.ts
+npx test
 
 ## local http testing
 curl http://localhost:3000
