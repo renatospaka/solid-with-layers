@@ -1,10 +1,12 @@
 import CreateTransaction from "../src/application/CreateTransaction";
 import GetTransaction from "../src/application/GetTransaction";
+import PostgreSQLAdapter from "../src/infra/database/PostgresSQLAdapter";
 import TransactionDatabaseRepository from "../src/infra/repository/TransactionDatabaseRepository";
 
 // given, when, then -- arrange, act, assert
 test("deve criar uma transação", async function () {
-  const transactionRepository = new TransactionDatabaseRepository();
+  const connection = new PostgreSQLAdapter();
+  const transactionRepository = new TransactionDatabaseRepository(connection);
   const code = `${Math.floor(Math.random() * 10000)}`;
   const input = {
     code,
@@ -23,4 +25,6 @@ test("deve criar uma transação", async function () {
   expect(transaction.installments).toHaveLength(12);
   expect(transaction.installments[0].amount).toBe(83.33);
   expect(transaction.installments[11].amount).toBe(83.37);
+
+  await connection.close();
 });
